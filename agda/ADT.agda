@@ -1,6 +1,8 @@
 module agda.ADT where
 open import Level
 open import agda.Category
+import Relation.Binary.PropositionalEquality as Eq
+open Eq using (_≡_; refl)
 
 open PreCategory
 
@@ -26,6 +28,8 @@ Maybe-Endofunctor = record
   { F₀ = λ x -> Maybe x
   ; F₁ = λ f -> λ{ Nothing -> Nothing
                  ; (Just a) -> (Just (f a)) }
+  ; identity = λ {A} -> _
+  ; homomorphism = _
   }
 
 -- compare this to Haskell
