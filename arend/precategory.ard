@@ -1,0 +1,30 @@
+
+\class Precategory (Ob : \Type) {
+  | Hom : Ob -> Ob -> \Set
+  | id (x : Ob) : Hom x x
+  | \fixr 8 o {x y z : Ob} : Hom y z -> Hom x y -> Hom x z
+  | id-left {x y : Ob} (f : Hom x y) : f `o` id x = f
+  | id-right {x y : Ob} (f : Hom x y) : id y `o` f = f
+  | o-assoc {x y z w : Ob} (f : Hom x y) (g : Hom y z) (h : Hom z w) : h `o` (g `o` f) = (h `o` g) `o` f
+
+  \func \infixl 8 >> {x y z : Ob} (f : Hom x y) (g : Hom y z) => g `o` f
+
+
+  \func isomorphism {a b : Ob} (f : Hom a b) : \Sigma (g : Hom b a) (\Sigma (f >> g = id a)  (g >> f = id b)) => {?}
+
+
+
+}
+
+\class Functor {A B : \Type} {preA : Precategory A} {preB : Precategory B} (F : preA -> preB) {
+  | fmap {a b : A} (Hom a b) : Hom (F a) (F b)
+  | fmap-id (a : A) : F (id a) = id (F a)
+  | fmap-comp {a b c : A} (f : Hom a b) (g : Hom b c) : F (g o f) = (F g) o (F f)
+}
+
+\class NaturalTransformation {A B : \Type} {preA : Precategory A} {preB : Precategory B} {f g : A -> B}
+                             (gamma : Functor {A} {B} {preA} {preB} f -> Functor {A} {B} {preA} {preB} g) {
+ | nat (a : A) : Hom (f a) (g a)
+ | law {a b : A} (ff : Hom a b) : ((fmap g) o ff) o (nat a) = (nat b) o (f ff)
+}
+
