@@ -1,1 +1,1 @@
-Category Theory in Arend
+Category Theory in Agda, Arend, Coq, ... w/e 
