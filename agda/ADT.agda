@@ -44,6 +44,7 @@ Maybe-Endofunctor = record
                         ; (Just a) -> refl }
   }
 
+
 -- compare this to Haskell
 -- this maps objects in Hask to objects in Hask
 -- data Maybe a = Just a | Nothing
