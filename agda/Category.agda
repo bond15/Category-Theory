@@ -65,13 +65,14 @@ record Functor {ℓ₁ ℓ₂ : Level } (C : PreCategory ℓ₁ ℓ₂) (D : Pre
       F₁ (C._∘_ g f) ≡ D._∘_ (F₁ g) (F₁ f)
 
 
--- really a functor from a cartesian category to a category
+-- really a functor from a product category to a category
 record BiFunctor {ℓ₁ ℓ₂ : Level} (C : PreCategory ℓ₁ ℓ₂) (D : PreCategory ℓ₁ ℓ₂) (E : PreCategory ℓ₁ ℓ₂) : Set (ℓ₁ ⊔ ℓ₂) where
   private module C = PreCategory C
   private module D = PreCategory D
   private module E = PreCategory E
   field
     F₀ : E.Ob -- TODO
+
 
 
 module X {ℓ₁ ℓ₂} (𝒫 : PreCategory ℓ₁ ℓ₂) where
@@ -83,3 +84,97 @@ module X {ℓ₁ ℓ₂} (𝒫 : PreCategory ℓ₁ ℓ₂) where
       ⊥ : Ob
       ! : {A : Ob} -> ⊥ ⇒ A
       !-unique : ∀ {A} -> (f : ⊥ ⇒ A) -> ! ≡ f
+
+  record Terminal : Set(ℓ₁ ⊔ ℓ₂) where
+    field
+      ⊤ : Ob
+      ! : {A : Ob} -> A ⇒ ⊤
+      !-unique : ∀ {A} -> (f : A ⇒ ⊤) -> ! ≡ f
+
+  private
+    variable
+      A B : Ob
+      p q : A ⇒ B
+  record Product (A B : Ob): Set(ℓ₁ ⊔ ℓ₂) where
+    field
+      A×B : Ob
+      π₁ : A×B ⇒ A
+      π₂ : A×B ⇒ B
+      ⟨_,_⟩ : ∀ {C} -> C ⇒ A -> C ⇒ B -> C ⇒ A×B
+
+      proj₁ : π₁ ∘ ⟨ p , q ⟩ ≡ p
+      proj₂ : π₂ ∘ ⟨ p , q ⟩ ≡ q
+      --× : Ob
+      --π₁ : ∀ {A} -> x ⇒ A
+      --π₂ : ∀ {B} -> x ⇒ B
+      --! : ∀{A B} -> ∀ {C} -> (p : C ⇒ A) -> (q : C ⇒ B) -> (Σ (m : C ⇒ ×) Ob)
+
+        --(Σ (m : C ⇒ ×) (prf : Σ (p ≡ π₁ ∘ m) (q ≡ π₂ ∘ m)))
+      --_×_ : Ob -> Ob -> Ob
+      --π₁ : ∀ {A B} -> (A × B) ⇒ A
+      --π₂ : ∀ {A B} -> (A × B) ⇒ B
+
+
+open X
+
+data Void : Set₀ where
+
+postulate
+    -- extensionality for regular function types
+    -- gawd damn just use cubical agda
+    -- prove and earn that extensionality
+  extensionality : ∀ {A B : Set }{f g : A -> B}
+    -> (∀ (x : A) -> f x ≡ g x)
+    ---------------------------
+    -> f ≡ g
+
+Void-elim : ∀ {A : Set} -- Void-E  absurd
+  -> Void
+  -----
+  -> A
+Void-elim ()
+
+Void-Initial : Initial( Agda₀ )
+Void-Initial = record
+    { ⊥ = Void
+    ; ! = λ ()
+    ; !-unique = λ f -> extensionality λ v -> Void-elim v
+    }
+
+data Unit : Set₀ where
+  unit : Unit
+
+
+Unit-Terminal : Terminal( Agda₀ )
+Unit-Terminal = record
+    { ⊤ = Unit
+    ; ! = λ a -> unit
+    ; !-unique = λ f -> extensionality λ a -> _
+    }
+
+data _X_ (A B : Set₀) : Set₀ where
+  _x_ : A -> B -> A X B
+
+X-Product : ∀ {A B : Set₀} ->  Product( Agda₀) A B
+X-Product = record
+    { A×B = {!  !}
+    ; π₁ = {!   !}
+    ; π₂ = {!   !}
+    ; ⟨_,_⟩ = {!   !}
+    ; proj₁ = {!   !}
+    ; proj₂ = {!   !}
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+--
