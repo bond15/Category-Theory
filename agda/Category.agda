@@ -23,3 +23,30 @@ record PreCategory(l m : Level) : Set(suc (l ⊔ m)) where
     idˡ : ∀ {x y : Ob} (f : x ⇒ y) -> f ∘ (id {x}) ≡ f
     idʳ : ∀ {x y : Ob} (f : x ⇒ y) -> (id {y}) ∘ f ≡ f
     ∘-assoc : ∀ {x y z w : Ob} (f : x ⇒ y) (g : y ⇒ z) (h : z ⇒ w) -> h ∘ (g ∘ f) ≡ (h ∘ g) ∘ f
+
+
+module Constructions {ℓ₁ ℓ₂} (𝒞 𝒟 : PreCategory ℓ₁ ℓ₂) where
+
+  data _×_ {ℓ₁}(A B : Set ℓ₁) : Set ℓ₁ where
+    _,_ : A -> B -> A × B
+
+  record ProductCategory : Set where
+    open PreCategory
+    field
+      Ob×Ob : (Ob 𝒞 × Ob 𝒟)
+      _⇒×⇒_ : _×_ {ℓ₂} (_⇒_ 𝒞 (Ob 𝒞) (Ob 𝒞)) (_⇒_ 𝒟 (Ob 𝒟) (Ob 𝒟))   --(_⇒_ 𝒞 (Ob 𝒞) (Ob 𝒞) × _⇒_)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--
