@@ -3,15 +3,16 @@ open import Level
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
 
-open import agda.Functors
+open import agda.Functors using (Functor)
 open import agda.Agda-Cat using (Agda₀)
-open import agda.Theorems 
+open import agda.Theorems using (extensionality)
 
 data Maybe (A : Set) : Set where
   Just : A -> Maybe A
   Nothing : Maybe A
 
 -- Haskell Functors are typically EndoFunctors
+Endofunctor : Set₁
 Endofunctor = Functor Agda₀ Agda₀
 
 Maybe-Endofunctor : Endofunctor

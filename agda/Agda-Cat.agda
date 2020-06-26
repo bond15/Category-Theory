@@ -4,8 +4,9 @@ import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
 open import Level
 
-open import agda.Category
-open import agda.Theorems
+open import agda.Category using (PreCategory)
+open import agda.Theorems using (extensionality)
+open import agda.UniversalConstructions
 open Objects
 
 -- Agda₀ Category
