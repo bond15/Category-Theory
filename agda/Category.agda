@@ -93,9 +93,9 @@ module X {ℓ₁ ℓ₂} (𝒫 : PreCategory ℓ₁ ℓ₂) where
 
   private
     variable
-      A B : Ob
-      p q : A ⇒ B
-  record Product (A B : Ob): Set(ℓ₁ ⊔ ℓ₂) where
+      O₁ O₂ : Ob
+      p q r : O₁ ⇒ O₂
+  record Product (A B : Ob) : Set(ℓ₁ ⊔ ℓ₂) where
     field
       A×B : Ob
       π₁ : A×B ⇒ A
@@ -104,6 +104,18 @@ module X {ℓ₁ ℓ₂} (𝒫 : PreCategory ℓ₁ ℓ₂) where
 
       proj₁ : π₁ ∘ ⟨ p , q ⟩ ≡ p
       proj₂ : π₂ ∘ ⟨ p , q ⟩ ≡ q
+    --  unique : π₁ ∘ p ≡ q -> π₂ ∘ p ≡ r -> ⟨ q , r ⟩ ≡ p
+
+
+  record Coproduct (A B : Ob) : Set (ℓ₁ ⊔ ℓ₂) where
+    field
+      A+B : Ob
+      inˡ : A ⇒ A+B
+      inʳ : B ⇒ A+B
+      _+_ : ∀ {C} -> A ⇒ C -> B ⇒ C -> A+B ⇒ C
+
+      injˡ : (p + q) ∘ inˡ ≡ p
+      injʳ : (p + q) ∘ inʳ ≡ q
       --× : Ob
       --π₁ : ∀ {A} -> x ⇒ A
       --π₂ : ∀ {B} -> x ⇒ B
@@ -155,25 +167,47 @@ Unit-Terminal = record
 data _X_ (A B : Set₀) : Set₀ where
   _x_ : A -> B -> A X B
 
-X-Product : ∀ {A B : Set₀} ->  Product( Agda₀) A B
-X-Product = record
-    { A×B = {!  !}
-    ; π₁ = {!   !}
-    ; π₂ = {!   !}
-    ; ⟨_,_⟩ = {!   !}
-    ; proj₁ = {!   !}
-    ; proj₂ = {!   !}
+fst : ∀ {A B} -> A X B -> A
+fst (a x b) = a
+
+snd : ∀ {A B} -> A X B -> B
+snd (a x b) = b
+
+_ : Unit X Unit
+_ = unit x unit
+
+open PreCategory
+X-Product : ∀ (A B : Set₀) ->  Product Agda₀ A B
+X-Product A B = record
+    { A×B = A X B
+    ; π₁ = fst
+    ; π₂ = snd
+    ; ⟨_,_⟩ = λ f -> λ g -> (λ c -> (f c) x (g c))
+    ; proj₁ = refl
+    ; proj₂ = refl
+  --  ; unique = _
+    }
+
+data Either (A B : Set₀) : Set₀ where
+  left : A -> Either A B
+  right : B -> Either A B
+
+Either-Coproduct : ∀ (A B : Set₀) -> Coproduct Agda₀ A B
+Either-Coproduct A B = record
+    { A+B = Either A B
+    ; inˡ = left
+    ; inʳ = right
+    ; _+_ = λ f -> λ g -> λ { (left a) -> f a
+                            ; (right b) -> g b }
+    ; injˡ = refl
+    ; injʳ = refl
     }
 
 
 
 
 
-
-
-
-
-
+--Adamek and Lambek theorems
 
 
 
