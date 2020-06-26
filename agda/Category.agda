@@ -24,12 +24,9 @@ record PreCategory(l m : Level) : Set(suc (l ⊔ m)) where
     idʳ : ∀ {x y : Ob} (f : x ⇒ y) -> (id {y}) ∘ f ≡ f
     ∘-assoc : ∀ {x y z w : Ob} (f : x ⇒ y) (g : y ⇒ z) (h : z ⇒ w) -> h ∘ (g ∘ f) ≡ (h ∘ g) ∘ f
 
-
-
 module Objects {ℓ₁ ℓ₂} (𝒫 : PreCategory ℓ₁ ℓ₂) where
 
-  -- \McP
-  open PreCategory 𝒫
+  open PreCategory 𝒫 -- \McP
 
   record Initial : Set(ℓ₁ ⊔ ℓ₂) where
     field
@@ -41,7 +38,7 @@ module Objects {ℓ₁ ℓ₂} (𝒫 : PreCategory ℓ₁ ℓ₂) where
     field
       ⊤ : Ob
       ! : {A : Ob} -> A ⇒ ⊤
-      !-unique : ∀ {A} -> (f : A ⇒ ⊤) -> ! ≡ f
+    --  !-unique : ∀ {A} -> (f : A ⇒ ⊤) -> ! ≡ f
 
   private
     variable
@@ -58,7 +55,6 @@ module Objects {ℓ₁ ℓ₂} (𝒫 : PreCategory ℓ₁ ℓ₂) where
       proj₂ : π₂ ∘ ⟨ p , q ⟩ ≡ q
     --  unique : π₁ ∘ p ≡ q -> π₂ ∘ p ≡ r -> ⟨ q , r ⟩ ≡ p
 
-
   record Coproduct (A B : Ob) : Set (ℓ₁ ⊔ ℓ₂) where
     field
       A+B : Ob
@@ -68,11 +64,3 @@ module Objects {ℓ₁ ℓ₂} (𝒫 : PreCategory ℓ₁ ℓ₂) where
 
       injˡ : (p + q) ∘ inˡ ≡ p
       injʳ : (p + q) ∘ inʳ ≡ q
-
-
-
---Adamek and Lambek theorems
-
-
-
---

@@ -23,7 +23,6 @@ Agda₀ = record
   ; ∘-assoc = λ f g h -> refl
   }
 
-
 -- Universal Constructions
 
 data Void : Set₀ where
@@ -61,7 +60,7 @@ Unit-Terminal : Terminal Agda₀
 Unit-Terminal = record
     { ⊤ = Unit
     ; ! = λ a -> unit
-    ; !-unique = λ f -> extensionality λ a -> _
+  --  ; !-unique = λ f -> extensionality λ a -> _
     }
 
 

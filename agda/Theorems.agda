@@ -9,3 +9,7 @@ postulate
     -> (∀ (x : A) -> f x ≡ g x)
     ---------------------------
     -> f ≡ g
+
+-- TODO Adamek's Theorem
+
+-- TODO Lambek's Theorem

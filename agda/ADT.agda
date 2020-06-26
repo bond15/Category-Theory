@@ -1,32 +1,15 @@
 module agda.ADT where
 open import Level
-open import agda.Category
 import Relation.Binary.PropositionalEquality as Eq
 open Eq using (_≡_; refl)
 
-open PreCategory
-
-data _×_ (A B : Set) : Set where
-  ⟨_,_⟩ : A -> B -> A × B
-
-π₁ : ∀ {A B : Set} -> A × B -> A
-π₁ ⟨ a , b ⟩ = a
-
-π₂ : ∀ {A B : Set} -> A × B -> B
-π₂ ⟨ a , b ⟩ = b
+open import agda.Functors
+open import agda.Agda-Cat using (Agda₀)
+open import agda.Theorems 
 
 data Maybe (A : Set) : Set where
   Just : A -> Maybe A
   Nothing : Maybe A
-
-postulate
-    -- extensionality for regular function types
-    -- gawd damn just use cubical agda
-    -- prove and earn that extensionality
-  extensionality : ∀ {A B : Set }{f g : A -> B}
-    -> (∀ (x : A) -> f x ≡ g x)
-    ---------------------------
-    -> f ≡ g
 
 -- Haskell Functors are typically EndoFunctors
 Endofunctor = Functor Agda₀ Agda₀
