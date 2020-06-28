@@ -67,6 +67,23 @@ Either-EndoBifunctor = record
 -- or
 -- Either :: (Type × Type) -> Type
 
+-- Product EndoBifunctor
+data _X_ (A B : Set₀) : Set₀ where
+  _x_ : A -> B -> A X B
+
+fst : ∀ {A B} -> A X B -> A
+fst (a x b) = a
+
+snd : ∀ {A B} -> A X B -> B
+snd (a x b) = b
+
+X-EndoBifunctor : EndoBifunctor
+X-EndoBifunctor = record
+  { F₀ = λ a×b -> (π₁ a×b) X (π₂ a×b)
+  ; F₁ = λ fg -> λ p -> ((π₁ fg) (fst p)) x ((π₂ fg)(snd p))
+  ; identity = λ {A} -> extensionality λ { (a x b) -> refl }
+  ; homomorphism = λ {A B C} -> λ f g -> extensionality λ { (a x b) -> refl }
+  }
 
 
 

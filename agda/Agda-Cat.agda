@@ -89,10 +89,6 @@ Either-Coproduct A B = record
     ; injʳ = refl
     }
 
--- ProductCategory
-Agda₀₀ = ProductCategory Agda₀ Agda₀
-
-
 
 
 
