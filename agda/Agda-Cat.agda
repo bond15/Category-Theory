@@ -5,6 +5,8 @@ open Eq using (_≡_; refl)
 open import Level
 
 open import agda.Category using (PreCategory)
+open agda.Category.Product using (ProductCategory)
+--open Product
 open import agda.Theorems using (extensionality)
 open import agda.UniversalConstructions
 open Objects
@@ -16,7 +18,7 @@ open Objects
 Agda₀ : PreCategory (suc zero) zero
 Agda₀ = record
   { Ob = Set₀
-  ; _⇒_ = λ x y -> x -> y -- x y : Ob  , Hom := x -> y
+  ; _⇒_ =  λ x y -> x -> y -- x y : Ob  , Hom := x -> y
   ; _∘_ =  λ f g x -> f(g x)
   ; id = λ x -> x
   ; idˡ = λ f -> refl
@@ -86,3 +88,20 @@ Either-Coproduct A B = record
     ; injˡ = refl
     ; injʳ = refl
     }
+
+-- ProductCategory
+Agda₀₀ = ProductCategory Agda₀ Agda₀
+
+
+
+
+
+
+
+
+
+
+
+
+
+--

@@ -42,7 +42,6 @@ module Product where
     } where
       module 𝒞 = PreCategory 𝒞
       module 𝒟 = PreCategory 𝒟
-
       -- evidence of suffering
 
       --_ :  Rel (Set₀ × Set₀) zero
