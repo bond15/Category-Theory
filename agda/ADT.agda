@@ -33,6 +33,13 @@ Maybe-Endofunctor = record
   }
 
 
+fmap-maybe : {A B : agda.Category.PreCategory.Ob Agda₀} -> (f : A -> B) -> (m : Maybe A) -> Maybe B
+fmap-maybe = Functor.F₁ Maybe-Endofunctor
+
+-- functor composition example
+_ : Agda₀ -> Agda₀ -> Agda₀
+_ = ?
+
 -- compare this to Haskell
 -- this maps objects in Hask to objects in Hask
 -- data Maybe a = Just a | Nothing
@@ -42,6 +49,9 @@ Maybe-Endofunctor = record
 -- instance Functor Maybe where
 -- fmap f (Just a) = Just (f a)
 -- fmap f Nothing = Nothing
+
+
+
 
 
 -- Bifunctors
@@ -85,7 +95,9 @@ X-EndoBifunctor = record
   ; homomorphism = λ {A B C} -> λ f g -> extensionality λ { (a x b) -> refl }
   }
 
-
+-- Haskell
+-- data Prod a b = Prod a b
+-- Prod :: (Type × Type) -> Type
 
 
 
