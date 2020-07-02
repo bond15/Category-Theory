@@ -37,8 +37,7 @@ fmap-maybe : {A B : agda.Category.PreCategory.Ob Agda₀} -> (f : A -> B) -> (m 
 fmap-maybe = Functor.F₁ Maybe-Endofunctor
 
 -- functor composition example
-_ : Agda₀ -> Agda₀ -> Agda₀
-_ = ?
+
 
 -- compare this to Haskell
 -- this maps objects in Hask to objects in Hask
@@ -98,6 +97,36 @@ X-EndoBifunctor = record
 -- Haskell
 -- data Prod a b = Prod a b
 -- Prod :: (Type × Type) -> Type
+
+
+
+-- Const Functor (Haskell style)
+data Const (A : Set₀) : Set₀ where
+  const : A -> Const A
+
+data Unit : Set₀ where
+  unit : Unit
+
+-- alternative def
+Const-Functor : Functor Agda₀ Agda₀
+Const-Functor = record
+  { F₀ = λ X -> Unit
+  ; F₁ = λ _ -> λ u -> u
+  ; identity = refl
+  ; homomorphism = λ f g -> refl
+  }
+
+
+Id-Functor : Functor Agda₀ Agda₀
+Id-Functor = record
+  { F₀ = λ X -> X
+  ; F₁ = λ f -> f
+  ; identity = refl
+  ; homomorphism = λ f -> λ g -> refl
+  }
+
+
+
 
 
 

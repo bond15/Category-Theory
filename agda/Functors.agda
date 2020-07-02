@@ -1,3 +1,5 @@
+{-# OPTIONS  --allow-unsolved-metas #-}
+
 module agda.Functors where
 
 import Relation.Binary.PropositionalEquality as Eq
@@ -22,10 +24,11 @@ functor-∘ : ∀ {ℓ₁ ℓ₂ : Level } (ℬ 𝒞 𝒟 : PreCategory ℓ₁ �
 functor-∘ = λ ℬ 𝒞 𝒟 -> λ ℱ 𝒢 -> record
   { F₀ = λ b -> Functor.F₀ ℱ (Functor.F₀ 𝒢 b) -- some object A in ℬ   to  ℱ ( 𝒢 A) an object in 𝒟
   ; F₁ = λ Bf -> Functor.F₁ ℱ (Functor.F₁ 𝒢 Bf) -- some arrow f : A ⇒ B in ℬ to ℱ ( 𝒢 f) an arrow ℱ ( 𝒢 A) ⇒ ℱ ( 𝒢 B) in 𝒟
-  ; identity =  _ --λ {B} -> cong {! (Functor.identity 𝒢)  !} {!   !} 
+  ; identity =  λ {B} -> cong (λ x -> ?) {!   !}  --λ {B} -> cong {! (Functor.identity 𝒢)  !} {!   !}
   ; homomorphism = _
   }
 
+-- TODO Bifunctor composition
 
 -- really a functor from a product category to a category
 record BiFunctor {ℓ₁ ℓ₂ : Level} (C : PreCategory ℓ₁ ℓ₂) (D : PreCategory ℓ₁ ℓ₂) (E : PreCategory ℓ₁ ℓ₂) : Set (ℓ₁ ⊔ ℓ₂) where
