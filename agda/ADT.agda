@@ -126,6 +126,17 @@ Id-Functor = record
   }
 
 
+-- really F₀ should be a composition of bifunctors
+-- Either (Const ) (Identity A) ≅ Maybe A
+Maybe-Functor : Functor Agda₀ Agda₀
+Maybe-Functor = record
+  { F₀ = λ T -> (Functor.F₀ Either-EndoBifunctor ((Functor.F₀ Const-Functor) T , ( Id.F₀ T )))-- directly,  λ T ->  (Unit , T )
+  ; F₁ = λ fg -> λ p -> (Functor.F₁ Either-EndoBifunctor {! ((Functor.F₁ Const-Functor) , ? )  !} p )
+  ; identity = {!   !}
+  ; homomorphism = {!   !}
+  } where
+    Id = Id-Functor
+    C = Const-Functor
 
 
 
